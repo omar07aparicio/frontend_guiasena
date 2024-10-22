@@ -23,8 +23,6 @@ const isPasswordVisible = ref(false)
 </script>
 
 <template>
-  <!-- eslint-disable vue/no-v-html -->
-
   <div class="auth-wrapper d-flex align-center justify-center pa-4">
     <VCard
       class="auth-card pa-4 pt-7"
@@ -50,7 +48,10 @@ const isPasswordVisible = ref(false)
       </VCardText>
 
       <VCardText>
-        <VForm @submit.prevent="() => {}" ref="form">
+        <VForm
+          @submit.prevent="() => {}"
+          ref="form"
+        >
           <VRow>
             <!-- Username -->
             <VCol cols="12">
@@ -103,7 +104,7 @@ const isPasswordVisible = ref(false)
               <!-- rol -->
               <VCol cols="12">
                 <v-select
-                  v-model="paquete.role"
+                  v-model.number="paquete.role"
                   label="Rol"
                   :items="roles"
                   item-title="rol_name"
@@ -135,9 +136,8 @@ const isPasswordVisible = ref(false)
                 block
                 @click="registrar"
                 type="submit"
-                to="register"
               >
-                Sign up
+                Registrar
               </v-btn>
             </VCol>
           </VRow>
@@ -208,13 +208,10 @@ export default {
         this.dialog = true
 
         const response = await axios.post('http://localhost:3000/auth/register', this.paquete, {
-            headers: {
-              Authorization: `Bearer ${this.$store.getters.getUser.access_token}`,
-            },
-         }
-       )
-
-        console.log(response.data) // Suponiendo que la respuesta incluye un mensaje.
+          headers: {
+            Authorization: `Bearer ${this.$store.getters.getUser.access_token}`,
+          },
+        })
         this.$notify({ text: 'Usuario guardado con éxito...', type: 'success' }) // Cambia el tipo según sea necesario);
         this.resetForm()
         this.$emit('pguardar')
@@ -225,11 +222,11 @@ export default {
     },
     async fetchRoles() {
       try {
-        const response = await axios.get('http://localhost:3000/roles',{
-        headers: {
+        const response = await axios.get('http://localhost:3000/roles', {
+          headers: {
             Authorization: `Bearer ${this.$store.getters.getUser.access_token}`,
           },
-      })
+        })
         this.roles = response.data
       } catch (error) {
         console.error('Error al obtener los roles:', error)

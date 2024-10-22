@@ -1,10 +1,12 @@
 <script setup>
-import NavItems from '@/layouts/components/NavItems.vue'
-import logo from '@images/logo.svg?raw'
-import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
 import Footer from '@/layouts/components/Footer.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
+import NavItemsAdmin from '@/layouts/components/NavItemsAdmin.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
+import logo from '@images/logo.svg?raw'
+import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
+import NavItemsCoordinador from './NavItemsCoordinador.vue'
+import NavItemsInstructor from './NavItemsInstructor.vue'
 </script>
 
 <template>
@@ -23,7 +25,7 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
         <!-- 👉 Search -->
         <div
           class="d-flex align-center cursor-pointer"
-          style="user-select: none;"
+          style="user-select: none"
         >
           <!-- 👉 Search Trigger button -->
           <IconBtn>
@@ -68,9 +70,7 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
         />
         <!-- eslint-enable -->
 
-        <h1 class="font-weight-medium leading-normal text-xl text-uppercase">
-          SUGAS
-        </h1>
+        <h1 class="font-weight-medium leading-normal text-xl text-uppercase">SUGAS</h1>
       </RouterLink>
 
       <IconBtn
@@ -82,7 +82,9 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
     </template>
 
     <template #vertical-nav-content>
-      <NavItems />
+      <NavItemsAdmin v-if="userRole === 'admin'" />
+      <NavItemsCoordinador v-if="userRole === 'coordinador'" />
+      <NavItemsInstructor v-if="userRole === 'instructor'" />
     </template>
 
     <!-- 👉 Pages -->
@@ -94,7 +96,19 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
     </template>
   </VerticalNavLayout>
 </template>
-
+<script>
+export default {
+  data() {
+    return {
+      userRole: '',
+    }
+  },
+  computed: {},
+  mounted() {
+    this.userRole = this.$store.getters.getUser.rol
+  },
+}
+</script>
 <style lang="scss" scoped>
 .meta-key {
   border: thin solid rgba(var(--v-border-color), var(--v-border-opacity));

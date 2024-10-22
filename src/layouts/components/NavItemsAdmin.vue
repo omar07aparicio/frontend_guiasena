@@ -1,7 +1,7 @@
 <script setup>
-import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue';
-import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue';
-import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
+import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
+import VerticalNavGroup from '@layouts/components/VerticalNavGroup.vue'
+import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 </script>
 
 <template>
@@ -11,10 +11,8 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
       title: 'Programa',
       badgeClass: 'bg-error',
       icon: 'ri-home-smile-line',
-     
     }"
   >
-    
     <VerticalNavLink
       :item="{
         title: 'Crear Programa',
@@ -22,84 +20,68 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
         to: '/sugas/programa',
       }"
     />
-   
   </VerticalNavGroup>
 
   <VerticalNavGroup
-  :item="{
-    title: 'Competencia',
-    badgeClass: 'bg-error',
-    icon: 'ri-home-smile-line',
-   
-  }"
->
-
-<VerticalNavLink
+    :item="{
+      title: 'Competencia',
+      badgeClass: 'bg-error',
+      icon: 'ri-home-smile-line',
+    }"
+  >
+    <VerticalNavLink
       :item="{
         title: 'Crear Competencias',
         badgeClass: 'bg-light-primary text-primary',
         to: '/sugas/competencia',
       }"
     />
-</VerticalNavGroup>
+  </VerticalNavGroup>
 
-<VerticalNavGroup
-  :item="{
-    title: 'Asociacion',
-    badgeClass: 'bg-error',
-    icon: 'ri-home-smile-line',
-   
-  }"
->
-
-<VerticalNavLink
+  <VerticalNavGroup
+    :item="{
+      title: 'Asociacion',
+      badgeClass: 'bg-error',
+      icon: 'ri-home-smile-line',
+    }"
+  >
+    <VerticalNavLink
       :item="{
         title: 'Crear asocacion',
         badgeClass: 'bg-light-primary text-primary',
         to: '/sugas/programacompetencia',
       }"
     />
-</VerticalNavGroup>
-
-
-
+  </VerticalNavGroup>
 
   <!-- 👉 Front Pages -->
   <VerticalNavGroup
     :item="{
       title: 'Resultado Aprendizaje',
       icon: 'ri-file-copy-line',
-       }"
+    }"
   >
     <VerticalNavLink
       :item="{
         title: 'Res. Aprendizaje',
         to: '/sugas/resultado_aprendizaje',
-       
       }"
     />
-    
   </VerticalNavGroup>
 
   <VerticalNavGroup
     :item="{
       title: 'Cargar Guia',
       icon: 'ri-file-copy-line',
-       }"
+    }"
   >
     <VerticalNavLink
       :item="{
         title: 'Cargar guia',
         to: '/sugas/cargar_archivo',
-       
       }"
     />
-    
   </VerticalNavGroup>
-
-
-
-  
 
   <VerticalNavLink
     :item="{
@@ -111,16 +93,11 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
 
   <VerticalNavLink
     :item="{
-      title: 'Login',
+      title: 'Registrar Usuario',
       icon: 'ri-login-box-line',
-      to: '/login',
+      to: '/sugas/registro_usuario',
     }"
   />
 
-
-
   <!-- 👉 Others -->
-
-
- 
 </template>

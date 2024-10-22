@@ -2,7 +2,6 @@ export const routes = [
   {
     path: '',
     name: 'login',
-    meta: { requiresAuth: false },
     component: () => import('@/layouts/blank.vue'),
     redirect: 'login',
     children: [
@@ -19,15 +18,16 @@ export const routes = [
   },
   {
     path: '/sugas',
+    name: 'sugas',
     component: () => import('@/layouts/default.vue'),
     meta: { requiresAuth: true },
-    redirect: 'sugas/programa',
+    redirect: 'sugas/cargar_archivo',
     children: [
       {
         path: 'dashboard',
         component: () => import('@/pages/dashboard.vue'),
       },
-      
+
       {
         path: 'programa',
         meta: { requiresAdmin: true },
@@ -50,11 +50,14 @@ export const routes = [
       },
       {
         path: 'cargar_archivo',
-        meta: { requiresAdmin: true },
+        meta: { requiresAdmin: false },
         component: () => import('@/pages/archivo/archivocarga.vue'),
       },
-     
+      {
+        path: 'registro_usuario',
+        meta: { requiresAdmin: true },
+        component: () => import('@/pages/register.vue'),
+      },
     ],
   },
-  
 ]
