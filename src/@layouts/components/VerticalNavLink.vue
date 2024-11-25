@@ -23,7 +23,10 @@ const props = defineProps({
         class="nav-item-icon"
       />
       <!-- 👉 Title -->
-      <span class="nav-item-title">
+      <span
+        class="nav-item-title"
+        style="color: white"
+      >
         {{ item.title }}
       </span>
       <span

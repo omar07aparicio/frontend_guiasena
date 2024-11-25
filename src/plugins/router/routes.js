@@ -16,6 +16,7 @@ export const routes = [
       },
     ],
   },
+
   {
     path: '/sugas',
     name: 'sugas',
@@ -43,6 +44,7 @@ export const routes = [
         meta: { requiresAdmin: true },
         component: () => import('@/pages/programacompetencia/programacompetencia.vue'),
       },
+
       {
         path: 'resultado_aprendizaje',
         meta: { requiresAdmin: true },
@@ -57,6 +59,16 @@ export const routes = [
         path: 'registro_usuario',
         meta: { requiresAdmin: true },
         component: () => import('@/pages/register.vue'),
+      },
+      {
+        path: 'account-settings',
+        meta: { requiresAdmin: false },
+        component: () => import('@/pages/account-settings.vue'),
+      },
+      {
+        path: 'asignar-programa',
+        meta: { requiresAdmin: true },
+        component: () => import('@/pages/usuarios/asignarProgramas.vue'),
       },
     ],
   },

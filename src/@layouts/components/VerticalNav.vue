@@ -1,7 +1,7 @@
 <script setup>
+import logo from '@images/logo.svg?raw'
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 import { useDisplay } from 'vuetify'
-import logo from '@images/logo.svg?raw'
 
 const props = defineProps({
   tag: {
@@ -27,12 +27,15 @@ Close overlay vertical nav when link is clicked
 */
 const route = useRoute()
 
-watch(() => route.path, () => {
-  props.toggleIsOverlayNavActive(false)
-})
+watch(
+  () => route.path,
+  () => {
+    props.toggleIsOverlayNavActive(false)
+  },
+)
 
 const isVerticalNavScrolled = ref(false)
-const updateIsVerticalNavScrolled = val => isVerticalNavScrolled.value = val
+const updateIsVerticalNavScrolled = val => (isVerticalNavScrolled.value = val)
 
 const handleNavScroll = evt => {
   isVerticalNavScrolled.value = evt.target.scrollTop > 0
@@ -42,13 +45,14 @@ const handleNavScroll = evt => {
 <template>
   <!-- eslint-disable vue/no-v-html -->
   <Component
+    style="background-color: rgb(35, 130, 118)"
     :is="props.tag"
     ref="refNav"
     class="layout-vertical-nav"
     :class="[
       {
-        'visible': isOverlayNavActive,
-        'scrolled': isVerticalNavScrolled,
+        visible: isOverlayNavActive,
+        scrolled: isVerticalNavScrolled,
         'overlay-nav': mdAndDown,
       },
     ]"
@@ -64,10 +68,6 @@ const handleNavScroll = evt => {
             class="d-flex"
             v-html="logo"
           />
-
-          <h1 class="font-weight-medium leading-normal text-xl text-uppercase">
-            Materio
-          </h1>
         </RouterLink>
       </slot>
     </div>
@@ -107,11 +107,12 @@ const handleNavScroll = evt => {
 </style>
 
 <style lang="scss">
-@use "@configured-variables" as variables;
-@use "@layouts/styles/mixins";
+@use '@configured-variables' as variables;
+@use '@layouts/styles/mixins';
 
 // 👉 Vertical Nav
 .layout-vertical-nav {
+  color: white !important;
   position: fixed;
   z-index: variables.$layout-vertical-nav-z-index;
   display: flex;
@@ -169,6 +170,14 @@ const handleNavScroll = evt => {
     }
   }
 }
+
+.layout-nav-type-vertical .layout-vertical-nav .nav-link > .router-link-exact-active {
+    background: linear-gradient(-72.47deg, #fc7323 22.16%, rgba(252, 115, 35, 0.7) 76.47%) !important;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 0 transparent, 0 0 transparent;
+}
+
+
+
 
 // Small screen vertical nav transition
 @media (max-width: 1279px) {

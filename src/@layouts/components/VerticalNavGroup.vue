@@ -19,7 +19,7 @@ const isOpen = ref(false)
       @click="isOpen = !isOpen"
     >
       <VIcon
-        :icon="item.icon || 'ri-checkbox-blank-circle-line'"
+        :icon="item.icon ||'ri-checkbox-blank-circle-line'"
         class="nav-item-icon"
       />
       <span class="nav-item-title">{{ item.title }}</span>

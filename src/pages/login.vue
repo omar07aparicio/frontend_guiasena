@@ -1,5 +1,4 @@
 <script setup>
-import logo from '@images/logo.svg?raw'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import { useTheme } from 'vuetify'
@@ -20,32 +19,21 @@ const isPasswordVisible = ref(false)
 
 <template>
   <div class="auth-wrapper d-flex align-center justify-center pa-4">
-    <VCard
-      class="auth-card pa-4 pt-7"
-      max-width="448"
-    >
+    <VCard class="auth-card pa-4 pt-7 elevation-12">
       <VCardItem class="justify-center">
-        <!-- eslint-disable vue/no-v-html -->
-        <div
-          class="d-flex"
-          v-html="logo"
-        />
-        <h2 class="font-weight-medium text-2xl text-uppercase">Sugaas</h2>
+        <div class="d-flex justify-center mb-4">
+          <img src="../../../public/logo.png" alt="Logo" width="300" />
+        </div>
       </VCardItem>
 
-      <VCardText class="pt-2">
-        <h4 class="text-h4 mb-1">Welcome to Sugaas! 👋🏻</h4>
-        <p class="mb-0">Please sign-in to your account and start the adventure</p>
+      <VCardText class="pt-2 text-center">
+        <h4 class="text-h4 mb-1">Bienvenido a Sugas!</h4>
+        <p class="mb-0">Por favor, inicia sesión</p>
       </VCardText>
 
       <VCardText>
-        <v-form
-          ref="form"
-          validate-on="login lazy"
-          @submit.prevent="login"
-        >
+        <v-form ref="form" validate-on="login lazy" @submit.prevent="login">
           <VRow>
-            <!-- email -->
             <VCol cols="12">
               <v-text-field
                 v-model="email"
@@ -53,10 +41,12 @@ const isPasswordVisible = ref(false)
                 label="Email"
                 placeholder="example@example.com"
                 autocomplete="email"
+                outlined
+                dense
+                clearable
               />
             </VCol>
 
-            <!-- password -->
             <VCol cols="12">
               <v-text-field
                 v-model="password"
@@ -66,29 +56,22 @@ const isPasswordVisible = ref(false)
                 :type="isPasswordVisible ? 'text' : 'password'"
                 :append-inner-icon="isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                outlined
+                dense
               />
+              <VCol cols="12" v-if="passwordError">
+                <p class="error-message">{{ passwordError }}</p>
+              </VCol>
 
-              <!-- remember me checkbox -->
               <div class="d-flex align-center justify-space-between flex-wrap my-6">
                 <VCheckbox
                   v-model="form.remember"
                   label="Remember me"
                 />
-
-                <a
-                  class="text-primary"
-                  href="javascript:void(0)"
-                >
-                  Forgot Password?
-                </a>
+                <a class="text-primary" href="javascript:void(0)">Forgot Password?</a>
               </div>
 
-              <!-- login button -->
-              <VBtn
-                block
-                type="submit"
-                @click="login"
-              >
+              <VBtn block type="submit" @click="login" class="login-button mt-4">
                 Login
               </VBtn>
             </VCol>
@@ -96,10 +79,9 @@ const isPasswordVisible = ref(false)
         </v-form>
       </VCardText>
     </VCard>
-
-    <!-- bg img -->
   </div>
 </template>
+
 <script>
 import axios from 'axios'
 
@@ -113,6 +95,7 @@ export default {
       value => /.+@.+\..+/.test(value) || 'E-mail must be valid.',
     ],
     password: '',
+    passwordError: '',
     passwordRules: [
       value => !!value || 'Password is required.',
       // Agregar más reglas según sea necesario
@@ -120,11 +103,11 @@ export default {
   }),
   methods: {
     async login() {
-      const isValid = this.$refs.form.validate() // Valida el formulario
+      const isValid = this.$refs.form.validate()
 
       if (!isValid) {
         console.log('Formulario no válido')
-        return // Si el formulario no es válido, no se envía
+        return
       }
 
       try {
@@ -133,24 +116,53 @@ export default {
           password: this.password,
         })
 
-        console.log(response)
         this.$store.commit('setUser', response.data)
-
         this.$store.dispatch('login')
         this.$router.push({ path: '/sugas' })
       } catch (error) {
-        if (error.response) {
-          console.error('Error de respuesta:', error.response.data)
-          console.error('Código de estado:', error.response.status)
-          console.error('Encabezados:', error.response.headers)
-        } else if (error.request) {
-          console.error('Sin respuesta del servidor:', error.request)
-        } else {
-          console.error('Error en la solicitud:', error.message)
+        if (error.response.data.message === 'Incorrect password') {
+          this.passwordError = 'Contraseña incorrecta'
+        } else if (error.response.data.message === 'Invalid credentials') {
+          this.passwordError = 'El usuario no existe'
         }
-        console.error('Configuración completa del error:', error.config)
       }
     },
   },
 }
+
 </script>
+
+<style scoped>
+.auth-wrapper {
+  min-height: 100vh;
+  background-color: rgba(252, 115, 35, 0.804) !important; /* 52 115 35  35 130 118*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-card {
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+.error-message {
+  color: red !important; /* Texto de error en rojo y con !important */
+  font-size: 0.875rem;
+}
+
+h4 {
+  font-weight: 600;
+}
+
+p {
+  color: rgb(58, 57, 57);
+}
+
+.login-button {
+  background-color: rgb(252, 115, 35) !important; /* Cambiado a verde y con !important */
+  color: white !important; /* Texto blanco para el botón y con !important */
+}
+</style>
